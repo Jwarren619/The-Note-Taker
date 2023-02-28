@@ -22,7 +22,14 @@
     <nav class="navbar navbar-dark bg-dark">
       <a class="navbar-brand" href="/">Note Taker </a>
       <div class="icons">
+        <i class="fas fa-save text-light save-note" style="display: none;"></i>
+        
+        <i class="fas fa-plus text-light new-note"></i>
+      </div>
+      <div class="icons">
         <i class="fas fa-save text-light save-note"></i>
+        <i class="fas fa-save text-light save-note" style="display: inline;"></i>
+        
         <i class="fas fa-plus text-light new-note"></i>
       </div>
     </nav>
@@ -31,6 +38,8 @@
         <div class="col-4 list-container">
           <div class="card">
             <ul class="list-group"></ul>
+            <li class="list-group-item" data-note="{&quot;title&quot;:&quot;test&quot;,&quot;text&quot;:&quot;test&quot;,&quot;id&quot;:&quot;e97a&quot;}"><span class="list-item-title">Hi</span><i class="fas fa-trash-alt float-right text-danger delete-note"></i></li>
+            <li class="list-group-item" data-note="{&quot;title&quot;:&quot;test&quot;,&quot;text&quot;:&quot;test&quot;,&quot;id&quot;:&quot;e97a&quot;}"><span class="list-item-title">The Work Is Done</span><i class="fas fa-trash-alt float-right text-danger delete-note"></i></li>
           </div>
         </div>
         <div class="col-8">
@@ -44,6 +53,6 @@
         </div>
       </div>
     </div>
-    <script src="./Assets/js/index.js"></script>
+    <script src="/public/Assets/js/index.js"></script>
   </body>
 </html>
