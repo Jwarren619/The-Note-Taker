@@ -1,6 +1,4 @@
-
-    
-        [
-            {"title":"Hi","text":"test","id":"e97a"},{"title":"my note","text":"test note","id":"4ee1"}
-        ]
-    
+[
+  { "title": "Hi", "text": "test", "id": "e97a" },
+  { "title": "my note", "text": "test note", "id": "4ee1" }
+]

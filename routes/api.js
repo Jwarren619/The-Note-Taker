@@ -10,6 +10,7 @@ module.exports = app => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) throw err;
         notes = JSON.parse(data);
+        console.log(notes)
     });
 
     app.get('/api/note', (req, res) => {
@@ -20,7 +21,9 @@ module.exports = app => {
         let newNote = {
             ...req.body,
             id: uuid(),
+            
         }
+        console.log(newNote);
         notes.push(newNote);
         writeNotes();
         res.json(notes)
