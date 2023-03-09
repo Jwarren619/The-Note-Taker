@@ -1,42 +1,54 @@
 
-
-const fs = require('fs');
+const notesRouter = require("express").Router();
+const fs = require('fs/promises');
 const uuid = require('../helpers/uuid');
 
 
-module.exports = app => {
-    let notes;
+//
 
-    fs.readFile('./db/db.json', 'utf8', (err, data) => {
-        if (err) throw err;
-        notes = JSON.parse(data);
-        console.log(notes)
+let readNotes = async () => {
+    return fs.readFile("./db/db.json", (err, data) => data);
+  };
+  
+  notesRouter.get("/notes", async (req, res) => {
+    let notes = await readNotes();
+    notes = JSON.parse(notes);
+   
+    res.json(notes);
+  });
+  
+  notesRouter.post("/notes", async (req, res) => {
+    
+    let notes = await readNotes();
+   
+    notes = JSON.parse(notes);
+     console.log(notes)
+  
+    let newNote = {
+      ...req.body,
+      id: uuid()
+    };
+    notes.push(newNote);
+    await writeNotes(notes);
+    res.json(notes);
+  });
+  
+  notesRouter.delete("/notes/:id", async (req, res) => {
+    
+    let notes = await readNotes();
+    notes = JSON.parse(notes);
+    let newNotes = notes.filter((note) => note.id !== req.params.id);
+    await writeNotes(newNotes);
+    res.json(notes);
+  });
+  
+  async function writeNotes(notes) {
+    //
+    fs.writeFile("./db/db.json", JSON.stringify(notes), "utf8", (err) => {
+      if (err) throw err;
+      return true;
     });
-
-    app.get('/api/note', (req, res) => {
-        res.json(notes)
-    });
-
-    app.post('/api/notes', (req, res) => {
-        let newNote = {
-            ...req.body,
-            id: uuid(),
-            
-        }
-        console.log(newNote);
-        notes.push(newNote);
-        writeNotes();
-        res.json(notes)
-    });
-
-    function writeNotes() {
-        fs.writeFile('./db/db.json', JSON.stringify(notes), 'utf8', err => {
-            if (err) throw err;
-            return true;
-        });
-        app.delete('/api/notes/:id', (req, res) => {
-            notes.splice(req.params.id, 1);
-            writeNotes();
-            res.json(notes)
-        });
-}}
+    //
+  }
+  
+  module.exports = notesRouter;

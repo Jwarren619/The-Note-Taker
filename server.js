@@ -1,15 +1,17 @@
-const express = require('express');
+// my globals to keep all my functions together
+const express = require("express");
 const PORT = process.env.PORT || 3001;
-
+const htmlRoutes = require("./routes/html");
+const apiRoutes = require("./routes/api");
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-require('./routes/api')(app);
-require('./routes/html')(app);
+app.use("/api", apiRoutes);
+app.use("/", htmlRoutes);
 
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`);
